@@ -1,4 +1,5 @@
 import Welcome from "pages/welcome";
+import GetStarted from "pages/getStarted";
 import homeRoutes from "routes/pages/homeRoutes";
 
 const routes = [
@@ -9,8 +10,12 @@ const routes = [
     auth: false,
     component: Welcome,
   },
-  // Home routes
-  ...homeRoutes,
+  {
+    path: `/get_started`,
+    exact: true,
+    auth: false,
+    component: GetStarted,
+  },
 ];
 
 export default routes;

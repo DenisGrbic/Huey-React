@@ -1,1 +1,1 @@
-export const APP_NAME = 'Code Challenge'
+export const APP_NAME = 'Huey'

@@ -6,10 +6,10 @@ import MainHeader from "./main/MainHeader";
 export default function Header({ ...props }) {
   return (
     <React.Fragment>
-      <CssBaseline />
+      {/* <CssBaseline />
       <HideOnTop {...props}>
         <MainHeader />
-      </HideOnTop>
+      </HideOnTop> */}
     </React.Fragment>
   );
 }
