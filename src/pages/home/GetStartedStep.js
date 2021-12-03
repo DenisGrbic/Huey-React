@@ -1,28 +1,15 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
-import { makeStyles } from "@mui/styles";
 import { checkValid, getValidationMessage } from "lib/strings";
 import React, { useEffect, useState } from "react";
-
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  title: {
-    fontSize: "30px!important",
-    color: "#0a86f0",
-  },
-  text: {
-    fontSize: "18px!important",
-  },
-}));
 
 const layout = [
   { name: "first_name", type: "text", label: "What is your first name?" },
   { name: "email", type: "email", label: "What is your email?" },
 ];
 
-const GetStartedStep1 = ({ data = {}, onChangeStep = () => {} }) => {
-  const classes = useStyles();
+const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
 
   const [formData, setFormData] = useState({ first_name: "", email: "" });
   const [error, setError] = useState({});
@@ -59,7 +46,7 @@ const GetStartedStep1 = ({ data = {}, onChangeStep = () => {} }) => {
   }, [data]);
 
   return (
-    <Box className={classes.root}>
+    <Box>
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="h3" color="primary" className="text-red">
@@ -67,7 +54,7 @@ const GetStartedStep1 = ({ data = {}, onChangeStep = () => {} }) => {
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography className={classes.text}>I need a few details</Typography>
+          <Typography variant="h5" color="">I need a few details</Typography>
         </Grid>
         {layout.map((item, itemIndex) => (
           <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
@@ -109,4 +96,4 @@ const GetStartedStep1 = ({ data = {}, onChangeStep = () => {} }) => {
   );
 };
 
-export default GetStartedStep1;
+export default GetStartedStep;

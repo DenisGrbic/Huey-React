@@ -6,7 +6,7 @@ const PageCenterLayout = ({ children = "", ...props }) => {
     <div>
       <Container>
         <div className="min-h-screen flex flex-col justify-center items-center ">
-          <div className="border-2 border-gray sm:p-4 p-1 rounded-xl">
+          <div className="border-2 border-gray sm:p-7 p-1 rounded-xl">
             {children}
           </div>
         </div>

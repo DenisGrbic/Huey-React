@@ -1,6 +1,4 @@
-import Welcome from "pages/welcome";
-import GetStarted from "pages/getStarted";
-import homeRoutes from "routes/pages/homeRoutes";
+import Home from "pages/home";
 
 const routes = [
   // page for guest
@@ -8,13 +6,7 @@ const routes = [
     path: `/`,
     exact: true,
     auth: false,
-    component: Welcome,
-  },
-  {
-    path: `/get_started`,
-    exact: true,
-    auth: false,
-    component: GetStarted,
+    component: Home,
   },
 ];
 
