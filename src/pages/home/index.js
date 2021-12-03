@@ -3,15 +3,21 @@ import HorizontalLinearStepper from "components/HorizontalLinearStepper";
 import PageCenterLayout from "components/PageCenterLayout";
 import React, { useState } from "react";
 import GetStarted from "./GetStarted";
-import Welcome from "./Welcome";
 import Terms from "./Terms";
+import Welcome from "./Welcome";
+import Step1 from "./Step1";
 
 const Home = ({ onNext = () => {} }) => {
   const [data, setData] = useState({});
   const [step, setStep] = useState(0);
+  const [name, setName] = useState("");
 
   const handleChangeStep = (value) => {
     setStep((s) => s + value);
+  };
+
+  const handleChange = (param) => {
+    setData(param);
   };
 
   return (
@@ -22,17 +28,38 @@ const Home = ({ onNext = () => {} }) => {
           <div>
             <Collapse in={step === 0}>
               <div>
-                <Welcome data={data} onChangeStep={handleChangeStep} />
+                <Welcome
+                  data={data}
+                  onChange={handleChange}
+                  onChangeStep={handleChangeStep}
+                />
               </div>
             </Collapse>
             <Collapse in={step === 1}>
               <div>
-                <GetStarted data={data} onChangeStep={handleChangeStep} />
+                <GetStarted
+                  data={data}
+                  onChange={handleChange}
+                  onChangeStep={handleChangeStep}
+                />
               </div>
             </Collapse>
             <Collapse in={step === 2}>
               <div>
-                <Terms data={data} onChangeStep={handleChangeStep}></Terms>
+                <Terms
+                  data={data}
+                  onChange={handleChange}
+                  onChangeStep={handleChangeStep}
+                ></Terms>
+              </div>
+            </Collapse>
+            <Collapse in={step === 3}>
+              <div>
+                <Step1
+                  data={data}
+                  onChange={handleChange}
+                  onChangeStep={handleChangeStep}
+                ></Step1>
               </div>
             </Collapse>
           </div>

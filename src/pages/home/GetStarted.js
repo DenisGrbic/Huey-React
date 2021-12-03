@@ -9,13 +9,16 @@ const layout = [
   { name: "email", type: "email", label: "What is your email?" },
 ];
 
-const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
-  const [formData, setFormData] = useState({ first_name: "", email: "" });
+const GetStarted = ({
+  data = {},
+  onChange = () => {},
+  onChangeStep = () => {},
+}) => {
   const [error, setError] = useState({});
 
   const handleChange = (e) => {
     const { name, value, type } = e?.target ?? {};
-    setFormData((s) => ({ ...(s ?? {}), [name]: value }));
+    onChange((s) => ({ ...(s ?? {}), [name]: value }));
     setError((s) => ({
       ...(s ?? {}),
       [name]: checkValid(type, value) ? "" : getValidationMessage(type),
@@ -24,7 +27,7 @@ const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
 
   const handleNext = () => {
     const isValid = layout.reduce((ret, cur) => {
-      const t = checkValid(cur.type, formData?.[cur.name]);
+      const t = checkValid(cur.type, data?.[cur.name]);
       setError((s) => ({
         ...(s ?? {}),
         [cur.name]: t ? "" : getValidationMessage(cur.type),
@@ -36,19 +39,14 @@ const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
       console.log("error");
       return;
     }
-    console.log("@go next");
     onChangeStep(1);
   };
-
-  useEffect(() => {
-    setFormData(data);
-  }, [data]);
 
   return (
     <Box>
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="h3" color="primary" className="text-red">
+          <Typography variant="h4" color="primary">
             Get started
           </Typography>
         </Grid>
@@ -61,7 +59,7 @@ const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
           <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
             <TextField
               name={item?.name ?? ""}
-              value={formData?.[item?.name ?? ""] ?? ""}
+              value={data?.[item?.name ?? ""] ?? ""}
               onChange={handleChange}
               label={item?.label ?? ""}
               color="primary"
@@ -75,7 +73,7 @@ const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
         <Grid item>
           <Button
             onClick={() => onChangeStep(-1)}
-            color="primary"
+            color="success"
             variant="contained"
             startIcon={<ArrowBack />}
           >

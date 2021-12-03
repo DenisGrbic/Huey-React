@@ -37,7 +37,7 @@ const Welcome = ({ onChangeStep = () => {} }) => {
     <Box>
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="h3" color="primary" className="text-red">
+          <Typography variant="h4" color="primary">
             Welcome 👋
           </Typography>
         </Grid>
@@ -49,12 +49,12 @@ const Welcome = ({ onChangeStep = () => {} }) => {
       </Grid>
       <Grid container spacing={4} className={classes.buttonGroup} mt={0}>
         <Grid item lg={6} md={6} sm={12} xs={6}>
-          <Button color="success" variant="contained" onClick={handleNext}>
+          <Button color="primary" variant="contained" onClick={handleNext}>
             Get a bookbot that recommends books in my school collection
           </Button>
         </Grid>
         <Grid item lg={6} md={6} sm={12} xs={6}>
-          <Button color="primary" variant="contained">
+          <Button color="success" variant="contained">
             Find out more Huey the Bookot
           </Button>
         </Grid>

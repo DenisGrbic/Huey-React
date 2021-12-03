@@ -2,30 +2,26 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 
-const Terms = ({ data = {}, onChangeStep = () => {} }) => {
+const Step1 = ({ data={}, onChangeStep = () => {} }) => {
   return (
     <Box>
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="h4" color="primary">
-            Terms and Conditions
+            Step1 - Export Your Collection
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="h5" color="">
-            Hi <b>{data?.first_name ?? "there"}</b>. It’s great to have you
-            onboard.
+            Export a CSV file from your library management system
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="p" color="">
-            Now we need to add your collectiion to Huey so students get
-            recommendations that are in your library.
-          </Typography>
-        </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="p" color="">
-            It takes about 10 mins!
+            Please include 10,000 most recenlty published titles
+            <br/>-ISBN
+            <br/>-Title
+            <br/>-Author
           </Typography>
         </Grid>
         <Grid item>
@@ -53,4 +49,4 @@ const Terms = ({ data = {}, onChangeStep = () => {} }) => {
   );
 };
 
-export default Terms;
+export default Step1;
