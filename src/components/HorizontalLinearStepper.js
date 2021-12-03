@@ -1,5 +1,4 @@
-import { Container } from "@mui/material";
-import Box from "@mui/material/Box";
+import { Stack } from "@mui/material";
 import Step from "@mui/material/Step";
 import StepLabel from "@mui/material/StepLabel";
 import Stepper from "@mui/material/Stepper";
@@ -17,7 +16,7 @@ const steps = [
 
 export default function HorizontalLinearStepper({ step = 0 }) {
   return (
-    <div>
+    <Stack mb={2}>
       <Stepper activeStep={step}>
         {steps.map((label, index) => {
           const stepProps = {};
@@ -29,6 +28,6 @@ export default function HorizontalLinearStepper({ step = 0 }) {
           );
         })}
       </Stepper>
-    </div>
+    </Stack>
   );
 }

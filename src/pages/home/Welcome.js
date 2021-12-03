@@ -48,12 +48,12 @@ const Welcome = ({ onChangeStep = () => {} }) => {
         </Grid>
       </Grid>
       <Grid container spacing={4} className={classes.buttonGroup} mt={0}>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
+        <Grid item lg={6} md={6} sm={12} xs={6}>
           <Button color="success" variant="contained" onClick={handleNext}>
             Get a bookbot that recommends books in my school collection
           </Button>
         </Grid>
-        <Grid item lg={6} md={6} sm={6} xs={6}>
+        <Grid item lg={6} md={6} sm={12} xs={6}>
           <Button color="primary" variant="contained">
             Find out more Huey the Bookot
           </Button>

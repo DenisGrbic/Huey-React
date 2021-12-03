@@ -9,8 +9,7 @@ const layout = [
   { name: "email", type: "email", label: "What is your email?" },
 ];
 
-const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
-
+const GetStarted = ({ data = {}, onChangeStep = () => {} }) => {
   const [formData, setFormData] = useState({ first_name: "", email: "" });
   const [error, setError] = useState({});
 
@@ -54,7 +53,9 @@ const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="h5" color="">I need a few details</Typography>
+          <Typography variant="h5" color="">
+            I need a few details
+          </Typography>
         </Grid>
         {layout.map((item, itemIndex) => (
           <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
@@ -78,7 +79,7 @@ const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
             variant="contained"
             startIcon={<ArrowBack />}
           >
-            Back
+            <Typography>Back</Typography>
           </Button>
         </Grid>
         <Grid item>
@@ -86,9 +87,9 @@ const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
             onClick={handleNext}
             color="primary"
             variant="contained"
-            startIcon={<ArrowForward />}
+            endIcon={<ArrowForward />}
           >
-            Next
+            <Typography>Next</Typography>
           </Button>
         </Grid>
       </Grid>
@@ -96,4 +97,4 @@ const GetStartedStep = ({ data = {}, onChangeStep = () => {} }) => {
   );
 };
 
-export default GetStartedStep;
+export default GetStarted;

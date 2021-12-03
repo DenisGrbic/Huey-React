@@ -2,8 +2,9 @@ import { Collapse, Stack } from "@mui/material";
 import HorizontalLinearStepper from "components/HorizontalLinearStepper";
 import PageCenterLayout from "components/PageCenterLayout";
 import React, { useState } from "react";
-import GetStartedStep from "./GetStartedStep";
+import GetStarted from "./GetStarted";
 import Welcome from "./Welcome";
+import Terms from "./Terms";
 
 const Home = ({ onNext = () => {} }) => {
   const [data, setData] = useState({});
@@ -26,7 +27,12 @@ const Home = ({ onNext = () => {} }) => {
             </Collapse>
             <Collapse in={step === 1}>
               <div>
-                <GetStartedStep data={data} onChangeStep={handleChangeStep} />
+                <GetStarted data={data} onChangeStep={handleChangeStep} />
+              </div>
+            </Collapse>
+            <Collapse in={step === 2}>
+              <div>
+                <Terms data={data} onChangeStep={handleChangeStep}></Terms>
               </div>
             </Collapse>
           </div>
