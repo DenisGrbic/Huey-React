@@ -3,7 +3,6 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 
 const Success = ({ data = {}, onChangeStep = () => {} }) => {
-  console.log(data.school_name);
   return (
     <Box>
       <Grid container spacing={2} justifyContent="space-between">

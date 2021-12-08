@@ -1,11 +1,14 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import CsvGuideModal from "components/CsvGuideModal";
-import CsvLogo from "assets/img/csv_logo.png";
-
+import FileUploader from "components/FileUploader";
+import { formatCSV } from "models/csvHelper";
 import React from "react";
 
 const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
+  const handleLoaded = (value = [], fileInfo = {}) => {
+    console.log(formatCSV({ value, columns: ["Title", "Author", "ISBN"] }));
+  };
+
   return (
     <Box>
       <Grid container spacing={2} justifyContent="space-between">
@@ -15,13 +18,11 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
           </Typography>
         </Grid>
         <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="p" color="">
-            <Grid container spacing={3} mt={-1} mb={0.5}>
-              <Grid item>
-                <img src={CsvLogo} />
-              </Grid>
+          <Grid container spacing={3} mt={-1} mb={0.5} justifyContent="center">
+            <Grid item>
+              <FileUploader onLoaded={handleLoaded} />
             </Grid>
-          </Typography>
+          </Grid>
         </Grid>
         <Grid item>
           <Button
