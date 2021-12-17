@@ -1,12 +1,41 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
-import FileUploader from "components/FileUploader";
-import { formatCSV } from "models/csvHelper";
-import React from "react";
+import TextField from "@mui/material/TextField";
+import { checkValid, getValidationMessage } from "lib/strings";
+import React, { useState } from "react";
 
-const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
-  const handleLoaded = (value = [], fileInfo = {}) => {
-    console.log(formatCSV({ value, columns: ["Title", "Author", "ISBN"] }));
+const layout = [
+  { name: "school_name", type: "text", label: "Name of your school?" },
+  { name: "postcode", type: "text", label: "Postcode where your school is located?" },
+];
+
+const Step2 = ({ data = {}, onChange = () => {}, onChangeStep = () => {} }) => {
+  const [error, setError] = useState({});
+
+  const handleChange = (e) => {
+    const { name, value, type } = e?.target ?? {};
+    onChange((s) => ({ ...(s ?? {}), [name]: value }));
+    setError((s) => ({
+      ...(s ?? {}),
+      [name]: checkValid(type, value) ? "" : getValidationMessage(type),
+    }));
+  };
+
+  const handleNext = () => {
+    const isValid = layout.reduce((ret, cur) => {
+      const t = checkValid(cur.type, data?.[cur.name]);
+      setError((s) => ({
+        ...(s ?? {}),
+        [cur.name]: t ? "" : getValidationMessage(cur.type),
+      }));
+      return ret && t;
+    }, true);
+
+    if (!isValid) {
+      console.log("error");
+      return;
+    }
+    onChangeStep(1);
   };
 
   return (
@@ -14,16 +43,24 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="h4" color="primary">
-            Step 2 - Upload Your Collection
+            Step 2 - Name your collection
           </Typography>
         </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Grid container spacing={3} mt={-1} mb={0.5} justifyContent="center">
-            <Grid item>
-              <FileUploader onLoaded={handleLoaded} />
-            </Grid>
+        {layout.map((item, itemIndex) => (
+          <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
+            <TextField
+              name={item?.name ?? ""}
+              value={data?.[item?.name ?? ""] ?? ""}
+              onChange={handleChange}
+              label={item?.label ?? ""}
+              color="primary"
+              type={item?.type ?? ""}
+              error={Boolean(error?.[item?.name ?? ""])}
+              helperText={error?.[item?.name ?? ""] ?? ""}
+              fullWidth
+            />
           </Grid>
-        </Grid>
+        ))}
         <Grid item>
           <Button
             onClick={() => onChangeStep(-1)}
@@ -36,7 +73,7 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
         </Grid>
         <Grid item>
           <Button
-            onClick={() => onChangeStep(1)}
+            onClick={handleNext}
             color="primary"
             variant="contained"
             endIcon={<ArrowForward />}

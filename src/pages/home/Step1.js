@@ -32,7 +32,7 @@ const Step1 = ({ data = {}, onChangeStep = () => {} }) => {
                 -Author
               </Grid>
               <Grid item>
-                <img src={CsvLogo} />
+                <img src={CsvLogo} alt="CsvLogo" />
               </Grid>
             </Grid>
           </Typography>

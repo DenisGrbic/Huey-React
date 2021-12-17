@@ -1,4 +1,4 @@
-import { ArrowBack, ArrowForward } from "@mui/icons-material";
+import { ArrowBack } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import React from "react";
 

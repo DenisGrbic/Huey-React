@@ -23,7 +23,7 @@ export default function UploadButtons({ onLoaded = () => {} }) {
             mb={1.5}
           >
             <Grid container justifyContent="center">
-              <img src={CsvLogo} />
+              <img src={CsvLogo} alt="CSVLogo" />
             </Grid>
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>

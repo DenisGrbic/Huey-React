@@ -10,10 +10,9 @@ import Success from "./Success";
 import Terms from "./Terms";
 import Welcome from "./Welcome";
 
-const Home = ({ onNext = () => {} }) => {
+const Home = () => {
   const [data, setData] = useState({});
   const [step, setStep] = useState(0);
-  const [name, setName] = useState("");
 
   const handleChangeStep = (value) => {
     setStep((s) => s + value);

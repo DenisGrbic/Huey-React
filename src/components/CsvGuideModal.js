@@ -1,9 +1,8 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
-import GuideImage from "assets/img/csv_guide.png";
-import React from "react";
 import CsvGuideTable from "components/CsvGuideTable";
+import React from "react";
 
 const style = {
   position: "absolute",

@@ -2,7 +2,7 @@ import { ArrowBack, ArrowForward } from "@mui/icons-material";
 import { Box, Button, Grid, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { checkValid, getValidationMessage } from "lib/strings";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 const layout = [
   { name: "first_name", type: "text", label: "What is your first name?" },
@@ -15,7 +15,7 @@ const GetStarted = ({
   onChangeStep = () => {},
 }) => {
   const [error, setError] = useState({});
-
+ 
   const handleChange = (e) => {
     const { name, value, type } = e?.target ?? {};
     onChange((s) => ({ ...(s ?? {}), [name]: value }));
