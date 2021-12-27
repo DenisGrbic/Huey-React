@@ -15,7 +15,7 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
   const [error, setError] = useState("");
 
   const handleNext = () => {
-    console.log("isLoaded", isLoaded);
+    if(isLoaded) onChangeStep(1);
   };
   const handleLoaded = (value = [], fileInfo = {}) => {
     setIsLoading(true);
@@ -25,27 +25,26 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
       onFinish: (resTablelist) => {
         const CSVColumns = formatArray(value?.[0]);
         const dynamicKeys = ["ISBN", "Title", "Author"];
-        const airtableKeys = Object.keys(
-          resTablelist?.[0]?.fields ?? {}
-        ).sort();
         const isSameHeader = checkCSVColumns({
           csvColumns: CSVColumns,
           dbColumns: dynamicKeys,
         });
-        const isCorrectHeader = checkCSVColumns({
-          csvColumns: CSVColumns,
-          dbColumns: airtableKeys,
-        });
+        
+        // const airtableKeys = Object.keys(
+        //   resTablelist?.[0]?.fields ?? {}
+        // ).sort();
+        // const isCorrectHeader = checkCSVColumns({
+        //   csvColumns: CSVColumns,
+        //   dbColumns: airtableKeys,
+        // });
 
         const formatCSVData = formatCSV({
           value,
-          columns: ["Title", "Author", "ISBN"],
+          columns: dynamicKeys,
           airtableData: resTablelist,
         });
 
-        console.log("Customer data", data);
-
-        if (!isSameHeader || !isCorrectHeader) {
+        if (!isSameHeader) {
           setError("CSV Format error!");
           setIsLoading(false);
           return;
@@ -55,27 +54,27 @@ const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
           setIsLoading(false);
           return;
         }
-        if (!resTablelist?.length) {
-          setError("No Data!");
-          setIsLoading(false);
-          return;
-        }
         if (formatCSVData.length < 1) {
           setError("Existing data!");
           setIsLoading(false);
           return;
+        }
+        if (!resTablelist?.length) {
+          console.log("No data in DB");
+          setIsLoading(false);
         }
 
         // add users field name
         const submitData = formatCSVData.map((row) => ({
           ...(data ?? {}),
           ...(row ?? {}),
-        }));
+        })).sort();
 
         // insert records
         setBookList({
           data: wrapFields(submitData),
           onFinish: (res) => {
+            console.log("Successfully added!");
             setIsLoading(false);
             setIsLoaded(true);
           },

@@ -13,7 +13,6 @@ export const getSchoolList = ({ onFinish = () => {} } = {}) => {
   )
     .then((resp) => resp.json())
     .then((data) => {
-      console.log("airtable data", data);
       onFinish(data?.records ?? []);
     })
     .catch((err) => {
@@ -35,7 +34,6 @@ export const setSchoolList = ({ data = [], onFinish = () => {} } = {}) => {
       return;
     }
     records.forEach(function (record) {
-      console.log(record);
       onFinish(record);
     });
   });
