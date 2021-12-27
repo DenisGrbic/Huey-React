@@ -1,88 +1,140 @@
 import { ArrowBack, ArrowForward } from "@mui/icons-material";
-import { Box, Button, Grid, Typography } from "@mui/material";
-import TextField from "@mui/material/TextField";
-import { checkValid, getValidationMessage } from "lib/strings";
+import { Alert, Box, Button, Grid, Typography } from "@mui/material";
+import FileUploader from "components/FileUploader";
+import LoadingContainer from "components/LoadingContainer";
+import { formatArray } from "lib/arrayObject";
+import { wrapFields } from "models/airtableHelper";
+import { setBookList } from "models/bookModel";
+import { getBookList } from "models/bookModel";
+import formatCSV, { checkCSVColumns } from "models/csvHelper";
 import React, { useState } from "react";
 
-const layout = [
-  { name: "school_name", type: "text", label: "Name of your school?" },
-  { name: "postcode", type: "text", label: "Postcode where your school is located?" },
-];
-
-const Step2 = ({ data = {}, onChange = () => {}, onChangeStep = () => {} }) => {
-  const [error, setError] = useState({});
-
-  const handleChange = (e) => {
-    const { name, value, type } = e?.target ?? {};
-    onChange((s) => ({ ...(s ?? {}), [name]: value }));
-    setError((s) => ({
-      ...(s ?? {}),
-      [name]: checkValid(type, value) ? "" : getValidationMessage(type),
-    }));
-  };
+const Step2 = ({ data = {}, onChangeStep = () => {} }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [error, setError] = useState("");
 
   const handleNext = () => {
-    const isValid = layout.reduce((ret, cur) => {
-      const t = checkValid(cur.type, data?.[cur.name]);
-      setError((s) => ({
-        ...(s ?? {}),
-        [cur.name]: t ? "" : getValidationMessage(cur.type),
-      }));
-      return ret && t;
-    }, true);
+    console.log("isLoaded", isLoaded);
+  };
+  const handleLoaded = (value = [], fileInfo = {}) => {
+    setIsLoading(true);
+    setIsLoaded(false);
+    getBookList({
+      value: value,
+      onFinish: (resTablelist) => {
+        const CSVColumns = formatArray(value?.[0]);
+        const dynamicKeys = ["ISBN", "Title", "Author"];
+        const airtableKeys = Object.keys(
+          resTablelist?.[0]?.fields ?? {}
+        ).sort();
+        const isSameHeader = checkCSVColumns({
+          csvColumns: CSVColumns,
+          dbColumns: dynamicKeys,
+        });
+        const isCorrectHeader = checkCSVColumns({
+          csvColumns: CSVColumns,
+          dbColumns: airtableKeys,
+        });
 
-    if (!isValid) {
-      console.log("error");
-      return;
-    }
-    onChangeStep(1);
+        const formatCSVData = formatCSV({
+          value,
+          columns: ["Title", "Author", "ISBN"],
+          airtableData: resTablelist,
+        });
+
+        console.log("Customer data", data);
+
+        if (!isSameHeader || !isCorrectHeader) {
+          setError("CSV Format error!");
+          setIsLoading(false);
+          return;
+        }
+        if (!resTablelist) {
+          setError("Error!");
+          setIsLoading(false);
+          return;
+        }
+        if (!resTablelist?.length) {
+          setError("No Data!");
+          setIsLoading(false);
+          return;
+        }
+        if (formatCSVData.length < 1) {
+          setError("Existing data!");
+          setIsLoading(false);
+          return;
+        }
+
+        // add users field name
+        const submitData = formatCSVData.map((row) => ({
+          ...(data ?? {}),
+          ...(row ?? {}),
+        }));
+
+        // insert records
+        setBookList({
+          data: wrapFields(submitData),
+          onFinish: (res) => {
+            setIsLoading(false);
+            setIsLoaded(true);
+          },
+        });
+      },
+    });
   };
 
   return (
-    <Box>
-      <Grid container spacing={2} justifyContent="space-between">
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="h4" color="primary">
-            Step 2 - Name your collection
-          </Typography>
-        </Grid>
-        {layout.map((item, itemIndex) => (
-          <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
-            <TextField
-              name={item?.name ?? ""}
-              value={data?.[item?.name ?? ""] ?? ""}
-              onChange={handleChange}
-              label={item?.label ?? ""}
-              color="primary"
-              type={item?.type ?? ""}
-              error={Boolean(error?.[item?.name ?? ""])}
-              helperText={error?.[item?.name ?? ""] ?? ""}
-              fullWidth
-            />
+    <LoadingContainer loading={isLoading}>
+      <Box>
+        <Grid container spacing={2} justifyContent="space-between">
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Typography variant="h4" color="primary">
+              Step 2 - Upload Your Collection
+            </Typography>
           </Grid>
-        ))}
-        <Grid item>
-          <Button
-            onClick={() => onChangeStep(-1)}
-            color="success"
-            variant="contained"
-            startIcon={<ArrowBack />}
-          >
-            <Typography>Back</Typography>
-          </Button>
+          {error && (
+            <Grid item lg={12} md={12} sm={12} xs={12}>
+              <Alert severity="error">{error}</Alert>
+            </Grid>
+          )}
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Grid
+              container
+              spacing={3}
+              mt={-1}
+              mb={0.5}
+              justifyContent="center"
+            >
+              <Grid item>
+                <FileUploader onLoaded={handleLoaded} />
+              </Grid>
+            </Grid>
+          </Grid>
+          <Grid item>
+            <Button
+              onClick={() => onChangeStep(-1)}
+              color="success"
+              variant="contained"
+              startIcon={<ArrowBack />}
+            >
+              <Typography>Back</Typography>
+            </Button>
+          </Grid>
+          {/* onClick={() => onChangeStep(1)} */}
+          <Grid item>
+            <Button
+              onClick={handleNext}
+              color="primary"
+              variant="contained"
+              endIcon={<ArrowForward />}
+            >
+              <Typography>Next</Typography>
+            </Button>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Button
-            onClick={handleNext}
-            color="primary"
-            variant="contained"
-            endIcon={<ArrowForward />}
-          >
-            <Typography>Next</Typography>
-          </Button>
-        </Grid>
-      </Grid>
-    </Box>
+      </Box>
+    </LoadingContainer>
   );
 };
 

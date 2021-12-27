@@ -29,13 +29,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-function createData(title, author, isbn) {
-  return { title, author, isbn };
+function createData(isbn, title, author ) {
+  return { isbn, title, author };
 }
 
 const rows = [
-  createData("Meesha Makes Friends", "Percival, Tom", "987886353513"),
-  createData("Andrian Makes Friends", "Senn, Alex", "985632188152"),
+  createData("987886353513", "Meesha Makes Friends", "Percival, Tom"),
+  createData("985632188152", "Andrian Makes Friends", "Senn, Alex"),
 ];
 
 export default function CustomizedTables() {
@@ -44,17 +44,17 @@ export default function CustomizedTables() {
       <Table sx={{ minWidth: 700 }} aria-label="customized table">
         <TableHead>
           <TableRow>
+            <StyledTableCell>ISBN</StyledTableCell>
             <StyledTableCell>Title</StyledTableCell>
             <StyledTableCell>Author</StyledTableCell>
-            <StyledTableCell>ISBN</StyledTableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {rows.map((row) => (
             <StyledTableRow key={row.name}>
-             <StyledTableCell>{row.title}</StyledTableCell>
-              <StyledTableCell>{row.author}</StyledTableCell>
               <StyledTableCell>{row.isbn}</StyledTableCell>
+              <StyledTableCell>{row.title}</StyledTableCell>
+              <StyledTableCell>{row.author}</StyledTableCell>
             </StyledTableRow>
           ))}
         </TableBody>

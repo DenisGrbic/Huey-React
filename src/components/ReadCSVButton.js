@@ -10,13 +10,11 @@ export const CSVReadOptions = {
 
 export default function ReadCSVButton({ children = "", onLoaded = () => {} }) {
   return (
-    <div>
-      <CSVReader
-        inputStyle={{ display: "none" }}
-        onFileLoaded={onLoaded}
-        parserOptions={CSVReadOptions}
-        label={children}
-      />
-    </div>
+    <CSVReader
+      inputStyle={{ display: "none" }}
+      onFileLoaded={onLoaded}
+      parserOptions={CSVReadOptions}
+      label={children}
+    />
   );
 }

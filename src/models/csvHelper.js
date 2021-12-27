@@ -26,17 +26,10 @@ export default function formatCSV({
       if (
         Object.keys(row).length ===
           Object.values(row).filter((item) => item).length &&
-        !airtableData.filter((item) => item.fields.ISBN.includes(row.ISBN))
+        !airtableData.filter?.((item) => item.fields.ISBN.includes(row.ISBN))
           ?.length &&
         index !== 0
       ) {
-        // console.log(
-        //   "row ISBN >> " +
-        //     row.ISBN +
-        //     " >> " +
-        //     airtableData.filter((item) => item.fields.ISBN.includes(row.ISBN))
-        //       ?.length
-        // );
         return true;
       }
       return false;

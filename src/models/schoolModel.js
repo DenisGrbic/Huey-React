@@ -1,9 +1,9 @@
 import Airtable from "airtable";
 import { AIR_TABLE } from "lib/global";
 
-const tableName = "BookList";
+const tableName = "SchoolList";
 
-export const getBookList = ({ onFinish = () => {} } = {}) => {
+export const getSchoolList = ({ onFinish = () => {} } = {}) => {
 
   if (typeof onFinish !== "function") {
     onFinish = () => {};
@@ -17,13 +17,13 @@ export const getBookList = ({ onFinish = () => {} } = {}) => {
       onFinish(data?.records ?? []);
     })
     .catch((err) => {
-      console.log("Error getTableList");
+      console.log("Error getSchoolList");
       onFinish(false);
       // Error :(
     });
 };
 
-export const setBookList = ({ data = [], onFinish = () => {} } = {}) => {
+export const setSchoolList = ({ data = [], onFinish = () => {} } = {}) => {
   const base = new Airtable({ apiKey: AIR_TABLE.API_KEY }).base(
     AIR_TABLE.BASE_ID
   );

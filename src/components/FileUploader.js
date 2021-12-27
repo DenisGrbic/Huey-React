@@ -28,7 +28,7 @@ export default function UploadButtons({ onLoaded = () => {} }) {
           </Grid>
           <Grid item lg={12} md={12} sm={12} xs={12}>
             <Typography variant="subtitle1" color="black" className="text-center">
-              Upload your CSV file. Or drag and drop
+              Upload your CSV file.
             </Typography>
           </Grid>
         </Grid>

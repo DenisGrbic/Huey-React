@@ -3,23 +3,19 @@ import { Box, Button, Grid, Typography } from "@mui/material";
 import TextField from "@mui/material/TextField";
 import { checkValid, getValidationMessage } from "lib/strings";
 import React, { useState } from "react";
+// import { setSchoolList } from "models/schoolModel";
+import { getSchoolList } from "models/schoolModel";
 
 const layout = [
-  { name: "First name", type: "text", label: "What is your first name?" },
-  { name: "Email", type: "email", label: "What is your email?" },
-  { name: "School name", type: "text", label: "Name of your school?" },
+  { name: "school_name", type: "text", label: "Name of your school?" },
   {
-    name: "Postcode",
+    name: "postcode",
     type: "text",
     label: "Postcode where your school is located?",
   },
 ];
 
-const GetStarted = ({
-  data = {},
-  onChange = () => {},
-  onChangeStep = () => {},
-}) => {
+const Step2 = ({ data = {}, onChange = () => {}, onChangeStep = () => {} }) => {
   const [error, setError] = useState({});
 
   const handleChange = (e) => {
@@ -45,6 +41,19 @@ const GetStarted = ({
       console.log("error");
       return;
     }
+    getSchoolList({
+      onFinish: (resTablelist) => {
+        console.log("resTablelist", resTablelist);
+        // insert records
+        // setBookList({
+        //   data: wrapFields(formatCSVData),
+        //   onFinish: (res) => {
+        //     setIsLoading(false);
+        //     setIsLoaded(true);
+        //   },
+        // });
+      },
+    });
     onChangeStep(1);
   };
 
@@ -53,14 +62,14 @@ const GetStarted = ({
       <Grid container spacing={2} justifyContent="space-between">
         <Grid item lg={12} md={12} sm={12} xs={12}>
           <Typography variant="h4" color="primary">
-            Get started
+            Step 2 - Name your collection
           </Typography>
         </Grid>
-        <Grid item lg={12} md={12} sm={12} xs={12}>
-          <Typography variant="h5" color="">
-            I need a few details
-          </Typography>
-        </Grid>
+        {error && (
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            {/* <Alert severity="error">{error}</Alert> */}
+          </Grid>
+        )}
         {layout.map((item, itemIndex) => (
           <Grid key={itemIndex} item lg={12} md={12} sm={12} xs={12}>
             <TextField
@@ -101,4 +110,4 @@ const GetStarted = ({
   );
 };
 
-export default GetStarted;
+export default Step2;

@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import GetStarted from "./GetStarted";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
-import Step3 from "./Step3";
 import Success from "./Success";
 import Terms from "./Terms";
 import Welcome from "./Welcome";
@@ -74,15 +73,6 @@ const Home = () => {
               </div>
             </Collapse>
             <Collapse in={step === 5}>
-              <div>
-                <Step3
-                  data={data}
-                  onChange={handleChange}
-                  onChangeStep={handleChangeStep}
-                ></Step3>
-              </div>
-            </Collapse>
-            <Collapse in={step === 6}>
               <div>
                 <Success
                   data={data}
